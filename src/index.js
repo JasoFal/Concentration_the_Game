@@ -1,15 +1,24 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import DeckOfCardsNewDeck from './js/DeckOfCardsNewDeck';
+import DeckOfCardsApi from './js/DeckOfCardsApi';
 
 async function createDeckOfNewCards() {
-  const response = await DeckOfCardsNewDeck.newDeckApiCall();
-  if (response["deck_id"] && response["deck_id"] != "") {
-    console.log(response);
-    return response["deck_id"];
+  const newResponse = await DeckOfCardsApi.newDeckApiCall();
+  if (newResponse["deck_id"] && newResponse["deck_id"] != "") {
+    console.log(newResponse);
+    return newResponse["deck_id"];
   } else {
-    printError(response);
+    printError(newResponse);
+  }
+}
+
+async function getFullDeckOfCards(newDeckId) {
+  const drawResponse = await DeckOfCardsApi.drawFullDeckOfCards(newDeckId);
+  if (drawResponse) {
+    return drawResponse;
+  } else {
+    printError(drawResponse);
   }
 }
 
@@ -21,10 +30,12 @@ window.addEventListener("load", function() {
   document.querySelector("#startNewGame").addEventListener("click", function (event) {
     event.preventDefault();
     createDeckOfNewCards().then(function(newDeckId) {
-      console.log(newDeckId);
+      getFullDeckOfCards(newDeckId).then(function(drawnDeckOfCardsObject) {
+        const cardObjectArray = drawnDeckOfCardsObject["cards"]; 
+        console.log(cardObjectArray);
+      });
     });
   });
 });
 
-// Make next call to grab entire deck// getFullDeckOfCards
-// 
+//TODO Make next call to grab entire deck// getFullDeckOfCards
