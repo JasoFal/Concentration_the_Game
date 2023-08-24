@@ -1,4 +1,4 @@
-export default class DeckOfCardsNewDeck {
+export default class DeckOfCardsApi {
   static async newDeckApiCall() {
     try {
       const response = await fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/`);
