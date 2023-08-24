@@ -26,16 +26,23 @@ function printError(error) {
   document.querySelector("#errorMessage").innerText = `There was an error accessing Api: ${error}.`;
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   document.querySelector("#startNewGame").addEventListener("click", function (event) {
     event.preventDefault();
-    createDeckOfNewCards().then(function(newDeckId) {
-      getFullDeckOfCards(newDeckId).then(function(drawnDeckOfCardsObject) {
-        const cardObjectArray = drawnDeckOfCardsObject["cards"]; 
-        console.log(cardObjectArray);
+    createDeckOfNewCards().then(function (newDeckId) {
+      getFullDeckOfCards(newDeckId).then(function (drawnDeckOfCardsObject) {
+        const cardObjectArray = drawnDeckOfCardsObject["cards"];
+        cardObjectArray.forEach((element, index) => {
+          let div = document.createElement(`div`);
+          div.id = `${index}`;
+          // addDiv(index);
+          console.log(element);
+          console.log(div);
+        });
       });
     });
   });
 });
 
-//TODO Make next call to grab entire deck// getFullDeckOfCards
+// let img = document.createElement("img");
+// img.src = "https://deckofcardsapi.com/static/img/back.png";
