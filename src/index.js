@@ -6,7 +6,7 @@ import DeckOfCardsApi from './js/DeckOfCardsApi';
 async function createDeckOfNewCards() {
   const newResponse = await DeckOfCardsApi.newDeckApiCall();
   if (newResponse["deck_id"] && newResponse["deck_id"] != "") {
-    console.log(newResponse);
+    console.log("newDeck ApiResponse", newResponse);
     return newResponse["deck_id"];
   } else {
     printError(newResponse);
@@ -31,18 +31,20 @@ window.addEventListener("load", function () {
     event.preventDefault();
     createDeckOfNewCards().then(function (newDeckId) {
       getFullDeckOfCards(newDeckId).then(function (drawnDeckOfCardsObject) {
+        document.querySelector("#startZone").setAttribute("class", "hidden");
         const cardObjectArray = drawnDeckOfCardsObject["cards"];
+        let deckOutputEle = document.querySelector("#deckOutput");
         cardObjectArray.forEach((element, index) => {
           let div = document.createElement(`div`);
           div.id = `${index}`;
-          // addDiv(index);
-          console.log(element);
-          console.log(div);
+          let img = document.createElement("img");
+          img.src = "https://deckofcardsapi.com/static/img/back.png";
+          div.appendChild(img);
+          deckOutputEle.appendChild(div);
+          console.log("cardObjectArray" ,element);
+          console.log("Divs", div);
         });
       });
     });
   });
 });
-
-// let img = document.createElement("img");
-// img.src = "https://deckofcardsapi.com/static/img/back.png";
