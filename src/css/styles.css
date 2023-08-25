@@ -1,6 +1,11 @@
 div {
-  height: 150px;
-  width: 105px;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto;
+  align-items: space-evenly;
+  margin: 8px;
+  height: 120px;
+  width: 84px;
 }
 
 .hidden {
@@ -8,10 +13,11 @@ div {
 }
 
 img {
-  height: 150px;
-  width: 105px;
+  height: 120px;
+  width: 84px;
 }
 
 #startZone {
-  align-self: center;
+  height: 300px;
+  width: 300px;
 }
