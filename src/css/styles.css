@@ -1,0 +1,17 @@
+div {
+  height: 150px;
+  width: 105px;
+}
+
+.hidden {
+  display: none;
+}
+
+img {
+  height: 150px;
+  width: 105px;
+}
+
+#startZone {
+  align-self: center;
+}
