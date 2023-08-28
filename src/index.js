@@ -33,13 +33,17 @@ window.addEventListener("load", function () {
       getFullDeckOfCards(newDeckId).then(function (drawnDeckOfCardsObject) {
         document.querySelector("#startZone").setAttribute("class", "hidden");
         const cardObjectArray = drawnDeckOfCardsObject["cards"];
-        let deckOutputEle = document.querySelector("#deckOutput");
+        const deckOutputEle = document.querySelector("#deckOutput");
         cardObjectArray.forEach((element, index) => {
-          let div = document.createElement(`div`);
+          let div = document.createElement("div");
           div.id = `${index}`;
+          div.class = "cardDiv";
           let img = document.createElement("img");
           img.src = "https://deckofcardsapi.com/static/img/back.png";
           div.appendChild(img);
+          div.addEventListener("click", function () {
+            img.src = element["image"];
+          });
           deckOutputEle.appendChild(div);
           console.log("cardObjectArray" ,element);
           console.log("Divs", div);
@@ -48,3 +52,8 @@ window.addEventListener("load", function () {
     });
   });
 });
+
+//TODO Onclick event to be dealt with on Monday
+//TODO Will probably have to use EventListener inside the forEach loop
+//TODO Onclick want 2 things to happen 1: spit out a div id, 2: reveal card picture
+//TODO Create a class for handling card comparison and game mechanics
