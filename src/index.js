@@ -2,6 +2,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import DeckOfCardsApi from './js/DeckOfCardsApi';
+import ConcentrationGameObject from './js/ConcentrationGameObject';
 
 async function createDeckOfNewCards() {
   const newResponse = await DeckOfCardsApi.newDeckApiCall();
@@ -32,21 +33,26 @@ window.addEventListener("load", function () {
     createDeckOfNewCards().then(function (newDeckId) {
       getFullDeckOfCards(newDeckId).then(function (drawnDeckOfCardsObject) {
         document.querySelector("#startZone").setAttribute("class", "hidden");
-        const cardObjectArray = drawnDeckOfCardsObject["cards"];
+        let cardObjectArray = drawnDeckOfCardsObject["cards"];
+        const concentrationGameObject = new ConcentrationGameObject(cardObjectArray);
+        console.log("Array Of Card Objects", concentrationGameObject.cardDeckObjectArray);
         const deckOutputEle = document.querySelector("#deckOutput");
+        const cardBackImg = "https://deckofcardsapi.com/static/img/back.png";
         cardObjectArray.forEach((element, index) => {
           let div = document.createElement("div");
           div.id = `${index}`;
           div.class = "cardDiv";
           let img = document.createElement("img");
-          img.src = "https://deckofcardsapi.com/static/img/back.png";
+          img.src = cardBackImg;
           div.appendChild(img);
+          // console.log("cardObjectArray", element);
           div.addEventListener("click", function () {
             img.src = element["image"];
+            concentrationGameObject.cardSelectAndCompare(div.id);
+            console.log(concentrationGameObject.selectedCurrentCard);
+            console.log(concentrationGameObject.selectedPreviousCard);
           });
           deckOutputEle.appendChild(div);
-          console.log("cardObjectArray" ,element);
-          console.log("Divs", div);
         });
       });
     });
@@ -57,3 +63,17 @@ window.addEventListener("load", function () {
 //TODO Will probably have to use EventListener inside the forEach loop
 //TODO Onclick want 2 things to happen 1: spit out a div id, 2: reveal card picture
 //TODO Create a class for handling card comparison and game mechanics
+//TODO
+
+// let divSelect = document.querySelector("div.cardDiv");
+// if (concentrationGameObject.selectedCardArray[0] === true) {
+//   console.log("wow");
+//   divSelect.img = cardBackImg;
+//   concentrationGameObject.resetSelectionProcess();
+// } else if (concentrationGameObject.sameSelectedCard === false) {
+//   divSelect.img = cardBackImg;
+//   concentrationGameObject.resetSelectionProcess();
+// }
+
+// 
+// console.log("Divs", div);
