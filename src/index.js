@@ -44,13 +44,21 @@ window.addEventListener("load", function () {
           div.class = "cardDiv";
           let img = document.createElement("img");
           img.src = cardBackImg;
+          img.id = `img${index}`;
+          img.alt = "Picture of Card";
           div.appendChild(img);
-          // console.log("cardObjectArray", element);
           div.addEventListener("click", function () {
             img.src = element["image"];
             concentrationGameObject.cardSelectAndCompare(div.id);
-            console.log(concentrationGameObject.selectedCurrentCard);
-            console.log(concentrationGameObject.selectedPreviousCard);
+            if (concentrationGameObject.isComparisonTrue === true) {
+              let imgSelector = document.getElementById(`img${concentrationGameObject.selectedPreviousCard}`); 
+              console.log("imgSelect1", imgSelector);
+              imgSelector.src = cardBackImg;
+              imgSelector = document.getElementById(`img${concentrationGameObject.selectedCurrentCard}`);
+              console.log("imgSelect2", imgSelector);
+              imgSelector.src = cardBackImg;
+              concentrationGameObject.resetSelectionProcess();
+            }
           });
           deckOutputEle.appendChild(div);
         });
@@ -59,7 +67,8 @@ window.addEventListener("load", function () {
   });
 });
 
-//TODO Onclick event to be dealt with on Monday
+//TODO target both divs inside click event
+//TODO Use CSS filter
 //TODO Will probably have to use EventListener inside the forEach loop
 //TODO Onclick want 2 things to happen 1: spit out a div id, 2: reveal card picture
 //TODO Create a class for handling card comparison and game mechanics
@@ -75,5 +84,5 @@ window.addEventListener("load", function () {
 //   concentrationGameObject.resetSelectionProcess();
 // }
 
-// 
+//
 // console.log("Divs", div);
