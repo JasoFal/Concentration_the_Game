@@ -4,6 +4,9 @@ export default class ConcentrationGameObject {
     this.selectedPreviousCard = null;
     this.selectedCurrentCard = null;
     this.isComparisonTrue = null;
+    this.matchedCardArray = [];
+    this.previousAndCurrentCardArray = [this.selectedPreviousCard, this.selectedCurrentCard];
+    this.hasVictoryConditionBeenMet = false;
   }
 
   cardSelectAndCompare(cardDivId) {
@@ -12,31 +15,41 @@ export default class ConcentrationGameObject {
     } else if (this.selectedCurrentCard === null) {
       this.selectedCurrentCard = cardDivId;
     }
-    console.log(this.cardDeckObjectArray[this.selectedPreviousCard]["code"]);
-    // console.log(this.cardDeckObjectArray[this.selectedCurrentCard]["code"]);
-    if (this.selectedCurrentCard != null) {
-      if (this.cardDeckObjectArray[this.selectedPreviousCard]["code"] == this.cardDeckObjectArray[this.selectedCurrentCard]["code"]) {
+    if (this.selectedPreviousCard != null && this.selectedCurrentCard != null) {
+      this.cardComparison();
+    }
+  }
+
+  cardComparison() {
+    if (this.selectedCurrentCard != this.selectedPreviousCard) {
+      if (this.cardDeckObjectArray[this.selectedPreviousCard]["code"] === this.cardDeckObjectArray[this.selectedCurrentCard]["code"]) {
         this.isComparisonTrue = true;
-        this.cardDeckObjectArray.splice(this.selectedPreviousCard, 1);
-        this.cardDeckObjectArray.splice(this.selectedCurrentCard, 1);
         console.log(this.cardDeckObjectArray);
-        this.resetSelectionProcess();
+        this.matchedCardArray.push(this.selectedPreviousCard, this.selectedCurrentCard);
+        console.log("ComparisonIsTrue", this.isComparisonTrue);
+        this.victoryCheck();
+        // this.resetSelectionProcess();
       } else {
-        this.isComparisonTrue = false;  
-        console.log(this.isComparisonTrue);
+        this.isComparisonTrue = false;
+        console.log("ComparisonIsTrue", this.isComparisonTrue);
         this.resetSelectionProcess();
       }
+    } else {
+      this.resetSelectionProcess();
+    }
+  }
+
+  victoryCheck() {
+    let uniqueCardIdSet = new Set(this.matchedCardArray);
+    console.log("uniqueCardIdSet", uniqueCardIdSet);
+    if (uniqueCardIdSet.length === 103) {
+      this.hasVictoryConditionBeenMet = true;
     }
   }
 
   resetSelectionProcess() {
     this.selectedCurrentCard = null;
     this.selectedPreviousCard = null;
-    this.sameSelectedCard = null;
+    this.isComparisonTrue = null;
   }
 }
-
-// Unused Code 
-// if (this.selectedCardArray.length <= 1) {
-//   this.selectedPreviousCard = cardDivId;
-// }
