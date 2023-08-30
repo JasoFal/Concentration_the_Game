@@ -27,12 +27,21 @@ function printError(error) {
 }
 
 function setImageOnFalseFlagTimeOut(object) {
-  let imgSelector = document.getElementById(`img${object.selectedPreviousCard}`);
+  let imgSelectorFalse = document.getElementById(`img${object.selectedPreviousCard}`);
   const backOfCardImg = "https://deckofcardsapi.com/static/img/back.png";
-  imgSelector.src = backOfCardImg;
-  imgSelector = document.getElementById(`img${object.selectedCurrentCard}`);
+  imgSelectorFalse.src = backOfCardImg;
+  imgSelectorFalse = document.getElementById(`img${object.selectedCurrentCard}`);
   console.log(object.selectedCurrentCard);
-  imgSelector.src = backOfCardImg;
+  imgSelectorFalse.src = backOfCardImg;
+  object.resetSelectionProcess();
+}
+
+function setMatchedOnTrueFlag(object) {
+  let imgSelectorTrue = document.getElementById(`img${object.selectedPreviousCard}`);
+  imgSelectorTrue.setAttribute("class", "onCorrectMatch");
+  imgSelectorTrue = document.getElementById(`img${object.selectedCurrentCard}`);
+  imgSelectorTrue.setAttribute("class", "onCorrectMatch");
+  console.log(imgSelectorTrue);
   object.resetSelectionProcess();
 }
 
@@ -44,7 +53,6 @@ window.addEventListener("load", function () {
         document.querySelector("#startZone").setAttribute("class", "hidden");
         let cardObjectArray = drawnDeckOfCardsObject["cards"];
         const concentrationGameObject = new ConcentrationGameObject(cardObjectArray);
-        console.log("Array Of Card Objects", concentrationGameObject.cardDeckObjectArray);
         const deckOutputEle = document.querySelector("#deckOutput");
         cardObjectArray.forEach((element, index) => {
           let div = document.createElement("div");
@@ -56,15 +64,21 @@ window.addEventListener("load", function () {
           img.alt = "Picture of Card";
           div.appendChild(img);
           div.addEventListener("click", function () {
-            if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) {return}
-              img.src = element["image"];
-              concentrationGameObject.cardSelectAndCompare(div.id);
-              if (concentrationGameObject.isComparisonTrue === true) {
-                console.log("WOO!");
-                concentrationGameObject.resetSelectionProcess();
-              } else if (concentrationGameObject.isComparisonTrue === false) {
-                setTimeout(() => setImageOnFalseFlagTimeOut(concentrationGameObject), 1000);
-              }
+            if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) { return; }
+            img.src = element["image"];
+            img.setAttribute("class", "clicked");
+            concentrationGameObject.cardSelectAndCompare(div.id);
+            if (concentrationGameObject.isComparisonTrue === true) {
+              setMatchedOnTrueFlag(concentrationGameObject);
+            } else if (concentrationGameObject.isComparisonTrue === false) {
+              setTimeout(() => setImageOnFalseFlagTimeOut(concentrationGameObject), 1000);
+              let selectImgRemoveClicked = document.querySelector(`#img${concentrationGameObject.selectedPreviousCard}`);
+              selectImgRemoveClicked.removeAttribute("class", "clicked");
+              selectImgRemoveClicked = document.querySelector(`#img${concentrationGameObject.selectedCurrentCard}`);
+              selectImgRemoveClicked.removeAttribute("class", "clicked");
+              // Temp reset as I test borders and endGame
+              // concentrationGameObject.resetSelectionProcess();
+            }
           });
           deckOutputEle.appendChild(div);
         });
@@ -72,5 +86,3 @@ window.addEventListener("load", function () {
     });
   });
 });
-
-//TODO Use CSS filter for card detailing
