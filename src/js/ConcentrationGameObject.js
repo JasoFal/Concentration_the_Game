@@ -28,11 +28,10 @@ export default class ConcentrationGameObject {
         this.matchedCardArray.push(this.selectedPreviousCard, this.selectedCurrentCard);
         console.log("ComparisonIsTrue", this.isComparisonTrue);
         this.victoryCheck();
-        // this.resetSelectionProcess();
       } else {
         this.isComparisonTrue = false;
         console.log("ComparisonIsTrue", this.isComparisonTrue);
-        this.resetSelectionProcess();
+        // this.resetSelectionProcess();
       }
     } else {
       this.resetSelectionProcess();

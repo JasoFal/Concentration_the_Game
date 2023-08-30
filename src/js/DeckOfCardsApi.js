@@ -27,6 +27,3 @@ export default class DeckOfCardsApi {
     }
   }
 }
-
-// ?deck_count=2
-// Card draw ?=104

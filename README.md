@@ -28,3 +28,11 @@
 * _should go here_
 
 ## License
+
+----------------------------------------
+
+<!--TODO Have forEach loop create divs for each card -->
+<!--TODO Have the id of each div be the index -->
+<!--TODO Connect div to onClick event -->
+<!--TODO Change div css to equal a height of 150px and a width of 105px -->
+<!--TODO  -->
