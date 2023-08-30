@@ -8,6 +8,14 @@ div {
   width: 84px;
 }
 
+img.clicked {
+  box-shadow: 0 0 7px 4px #D30F8E;
+}
+
+img.onCorrectMatch {
+  box-shadow: 0 0 7px 4px #0f8ed3;
+}
+
 .hidden {
   display: none;
 }
@@ -15,6 +23,7 @@ div {
 img {
   height: 120px;
   width: 84px;
+  border-radius: 5px;
 }
 
 #startZone {
