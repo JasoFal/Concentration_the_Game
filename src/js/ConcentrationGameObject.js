@@ -7,6 +7,7 @@ export default class ConcentrationGameObject {
     this.matchedCardArray = [];
     this.previousAndCurrentCardArray = [this.selectedPreviousCard, this.selectedCurrentCard];
     this.hasVictoryConditionBeenMet = false;
+    this.uniqueCardIdSet = null;
   }
 
   cardSelectAndCompare(cardDivId) {
@@ -21,27 +22,21 @@ export default class ConcentrationGameObject {
   }
 
   cardComparison() {
-    if (this.selectedCurrentCard != this.selectedPreviousCard) {
-      if (this.cardDeckObjectArray[this.selectedPreviousCard]["code"] === this.cardDeckObjectArray[this.selectedCurrentCard]["code"]) {
-        this.isComparisonTrue = true;
-        console.log(this.cardDeckObjectArray);
-        this.matchedCardArray.push(this.selectedPreviousCard, this.selectedCurrentCard);
-        console.log("ComparisonIsTrue", this.isComparisonTrue);
-        this.victoryCheck();
-      } else {
-        this.isComparisonTrue = false;
-        console.log("ComparisonIsTrue", this.isComparisonTrue);
-        // this.resetSelectionProcess();
-      }
+    if (this.cardDeckObjectArray[this.selectedPreviousCard]["code"] === this.cardDeckObjectArray[this.selectedCurrentCard]["code"]) {
+      this.isComparisonTrue = true;
+      this.matchedCardArray.push(this.selectedPreviousCard, this.selectedCurrentCard);
+      console.log("ComparisonIsTrue", this.isComparisonTrue);
+      this.victoryCheck();
     } else {
-      this.resetSelectionProcess();
+      this.isComparisonTrue = false;
+      console.log("ComparisonIsTrue", this.isComparisonTrue);
     }
   }
 
   victoryCheck() {
-    let uniqueCardIdSet = new Set(this.matchedCardArray);
-    console.log("uniqueCardIdSet", uniqueCardIdSet);
-    if (uniqueCardIdSet.length === 103) {
+    this.uniqueCardIdSet = new Set(this.matchedCardArray);
+    console.log("uniqueCardIdSet", this.uniqueCardIdSet);
+    if (this.uniqueCardIdSet.length === 31) {
       this.hasVictoryConditionBeenMet = true;
     }
   }
