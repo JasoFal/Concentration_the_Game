@@ -26,7 +26,7 @@ function printError(error) {
   document.querySelector("#errorMessage").innerText = `There was an error accessing Api: ${error}.`;
 }
 
-function setImageOnFalseFlagTimeOut(object) {
+function setImageOnFalseBoolTimeOut(object) {
   let imgSelectorFalse = document.getElementById(`img${object.selectedPreviousCard}`);
   const backOfCardImg = "https://deckofcardsapi.com/static/img/back.png";
   imgSelectorFalse.src = backOfCardImg;
@@ -36,7 +36,7 @@ function setImageOnFalseFlagTimeOut(object) {
   object.resetSelectionProcess();
 }
 
-function setMatchedOnTrueFlag(object) {
+function setMatchedOnTrueBool(object) {
   let imgSelectorTrue = document.getElementById(`img${object.selectedPreviousCard}`);
   imgSelectorTrue.setAttribute("class", "onCorrectMatch");
   imgSelectorTrue = document.getElementById(`img${object.selectedCurrentCard}`);
@@ -63,22 +63,22 @@ window.addEventListener("load", function () {
           img.id = `img${index}`;
           img.alt = "Picture of Card";
           div.appendChild(img);
-          div.addEventListener("click", function () {
+          div.addEventListener("click", function eventHandler() {
             if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) { return; }
             if (div.id === concentrationGameObject.selectedPreviousCard) { return; }
+            if (concentrationGameObject.matchedCardArray.includes(div.id)) { return; }
             concentrationGameObject.cardSelectAndCompare(div.id);
+            if (div.class === "onCorrectMatch") { return; }
             img.src = element["image"];
             img.setAttribute("class", "clicked");
             if (concentrationGameObject.isComparisonTrue === true) {
-              setMatchedOnTrueFlag(concentrationGameObject);
+              setMatchedOnTrueBool(concentrationGameObject);
             } else if (concentrationGameObject.isComparisonTrue === false) {
-              setTimeout(() => setImageOnFalseFlagTimeOut(concentrationGameObject), 1000);
+              setTimeout(() => setImageOnFalseBoolTimeOut(concentrationGameObject), 1000);
               let selectImgRemoveClicked = document.querySelector(`#img${concentrationGameObject.selectedPreviousCard}`);
               selectImgRemoveClicked.removeAttribute("class", "clicked");
               selectImgRemoveClicked = document.querySelector(`#img${concentrationGameObject.selectedCurrentCard}`);
               selectImgRemoveClicked.removeAttribute("class", "clicked");
-              // Temp reset as I test borders and endGame
-              // concentrationGameObject.resetSelectionProcess();
             }
           });
           deckOutputEle.appendChild(div);
@@ -87,5 +87,3 @@ window.addEventListener("load", function () {
     });
   });
 });
-
-//TODO Important/ Bug is called by double clicking card need to remove the ability to click a card twice
