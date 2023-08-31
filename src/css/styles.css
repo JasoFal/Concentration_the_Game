@@ -1,11 +1,15 @@
 div {
   display: grid;
+}
+
+div.playArea {
   grid-template-columns: auto auto auto auto auto auto auto auto;
   grid-template-rows: auto auto auto auto;
   align-items: space-evenly;
   margin: 8px;
   height: 120px;
   width: 84px;
+  position: relative;
 }
 
 img.clicked {
@@ -23,10 +27,16 @@ img.onCorrectMatch {
 img {
   height: 120px;
   width: 84px;
+  margin: 8px;
   border-radius: 5px;
 }
 
 #startZone {
   height: 300px;
   width: 300px;
+}
+
+#victoryAlert {
+  font-size: 200px;
+  color: #e1341e;
 }
