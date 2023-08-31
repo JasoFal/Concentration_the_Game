@@ -50,19 +50,20 @@ function removeClickedClassOnComparisonFalse(object) {
   selectImgRemoveClicked.removeAttribute("class", "clicked");
 }
 
-function divCreation(index) {
+function divAndImgCreation(index) {
   let createDiv = document.createElement("div");
   createDiv.id = `${index}`;
   createDiv.class = "cardDiv";
-  return createDiv;
-}
-
-function imgCreation(index) {
   let createImg = document.createElement("img");
   createImg.src = "https://deckofcardsapi.com/static/img/back.png";
   createImg.id = `img${index}`;
   createImg.alt = "Picture of Card";
-  return createImg;
+  return [createDiv, createImg];
+}
+
+function showVictoryAndHideDomGameElements() {
+  document.querySelector("#deckOutput").setAttribute("class", "hidden");
+  document.querySelector("#victoryScreen").removeAttribute("class", "hidden");
 }
 
 window.addEventListener("load", function () {
@@ -75,8 +76,8 @@ window.addEventListener("load", function () {
         const concentrationGameObject = new ConcentrationGameObject(cardObjectArray);
         const deckOutputEle = document.querySelector("#deckOutput");
         cardObjectArray.forEach((element, index) => {
-          let div = divCreation(index);
-          let img = imgCreation(index);
+          let div = divAndImgCreation(index)[0];
+          let img = divAndImgCreation(index)[1];
           div.appendChild(img);
           div.addEventListener("click", function () {
             if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) { return; }
@@ -91,6 +92,13 @@ window.addEventListener("load", function () {
             } else if (concentrationGameObject.isComparisonTrue === false) {
               setTimeout(() => setImageOnComparisonFalseTimeOut(concentrationGameObject), 1000);
               removeClickedClassOnComparisonFalse(concentrationGameObject);
+              concentrationGameObject.resetSelectionProcess();
+            }
+            if (concentrationGameObject.hasVictoryConditionBeenMet === true) {
+              showVictoryAndHideDomGameElements();
+              document.querySelector("#playAgain").addEventListener("click", function () {
+                window.location.reload();
+              });
             }
           });
           deckOutputEle.appendChild(div);
