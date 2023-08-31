@@ -65,9 +65,10 @@ window.addEventListener("load", function () {
           div.appendChild(img);
           div.addEventListener("click", function () {
             if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) { return; }
+            if (div.id === concentrationGameObject.selectedPreviousCard) { return; }
+            concentrationGameObject.cardSelectAndCompare(div.id);
             img.src = element["image"];
             img.setAttribute("class", "clicked");
-            concentrationGameObject.cardSelectAndCompare(div.id);
             if (concentrationGameObject.isComparisonTrue === true) {
               setMatchedOnTrueFlag(concentrationGameObject);
             } else if (concentrationGameObject.isComparisonTrue === false) {
@@ -86,3 +87,5 @@ window.addEventListener("load", function () {
     });
   });
 });
+
+//TODO Important/ Bug is called by double clicking card need to remove the ability to click a card twice
