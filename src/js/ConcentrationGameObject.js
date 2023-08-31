@@ -25,18 +25,15 @@ export default class ConcentrationGameObject {
     if (this.cardDeckObjectArray[this.selectedPreviousCard]["code"] === this.cardDeckObjectArray[this.selectedCurrentCard]["code"]) {
       this.isComparisonTrue = true;
       this.matchedCardArray.push(this.selectedPreviousCard, this.selectedCurrentCard);
-      console.log("ComparisonIsTrue", this.isComparisonTrue);
       this.victoryCheck();
     } else {
       this.isComparisonTrue = false;
-      console.log("ComparisonIsTrue", this.isComparisonTrue);
     }
   }
 
   victoryCheck() {
     this.uniqueCardIdSet = new Set(this.matchedCardArray);
-    console.log("uniqueCardIdSet", this.uniqueCardIdSet);
-    if (this.uniqueCardIdSet.length === 31) {
+    if (this.uniqueCardIdSet.size == 32) {
       this.hasVictoryConditionBeenMet = true;
     }
   }
