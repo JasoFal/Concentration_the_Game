@@ -26,23 +26,43 @@ function printError(error) {
   document.querySelector("#errorMessage").innerText = `There was an error accessing Api: ${error}.`;
 }
 
-function setImageOnFalseBoolTimeOut(object) {
+function setImageOnComparisonFalseTimeOut(object) {
   let imgSelectorFalse = document.getElementById(`img${object.selectedPreviousCard}`);
   const backOfCardImg = "https://deckofcardsapi.com/static/img/back.png";
   imgSelectorFalse.src = backOfCardImg;
   imgSelectorFalse = document.getElementById(`img${object.selectedCurrentCard}`);
-  console.log(object.selectedCurrentCard);
   imgSelectorFalse.src = backOfCardImg;
   object.resetSelectionProcess();
 }
 
-function setMatchedOnTrueBool(object) {
+function setMatchedOnComparisonTrue(object) {
   let imgSelectorTrue = document.getElementById(`img${object.selectedPreviousCard}`);
   imgSelectorTrue.setAttribute("class", "onCorrectMatch");
   imgSelectorTrue = document.getElementById(`img${object.selectedCurrentCard}`);
   imgSelectorTrue.setAttribute("class", "onCorrectMatch");
-  console.log(imgSelectorTrue);
   object.resetSelectionProcess();
+}
+
+function removeClickedClassOnComparisonFalse(object) {
+  let selectImgRemoveClicked = document.querySelector(`#img${object.selectedPreviousCard}`);
+  selectImgRemoveClicked.removeAttribute("class", "clicked");
+  selectImgRemoveClicked = document.querySelector(`#img${object.selectedCurrentCard}`);
+  selectImgRemoveClicked.removeAttribute("class", "clicked");
+}
+
+function divCreation(index) {
+  let createDiv = document.createElement("div");
+  createDiv.id = `${index}`;
+  createDiv.class = "cardDiv";
+  return createDiv;
+}
+
+function imgCreation(index) {
+  let createImg = document.createElement("img");
+  createImg.src = "https://deckofcardsapi.com/static/img/back.png";
+  createImg.id = `img${index}`;
+  createImg.alt = "Picture of Card";
+  return createImg;
 }
 
 window.addEventListener("load", function () {
@@ -55,15 +75,10 @@ window.addEventListener("load", function () {
         const concentrationGameObject = new ConcentrationGameObject(cardObjectArray);
         const deckOutputEle = document.querySelector("#deckOutput");
         cardObjectArray.forEach((element, index) => {
-          let div = document.createElement("div");
-          div.id = `${index}`;
-          div.class = "cardDiv";
-          let img = document.createElement("img");
-          img.src = "https://deckofcardsapi.com/static/img/back.png";
-          img.id = `img${index}`;
-          img.alt = "Picture of Card";
+          let div = divCreation(index);
+          let img = imgCreation(index);
           div.appendChild(img);
-          div.addEventListener("click", function eventHandler() {
+          div.addEventListener("click", function () {
             if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) { return; }
             if (div.id === concentrationGameObject.selectedPreviousCard) { return; }
             if (concentrationGameObject.matchedCardArray.includes(div.id)) { return; }
@@ -72,13 +87,10 @@ window.addEventListener("load", function () {
             img.src = element["image"];
             img.setAttribute("class", "clicked");
             if (concentrationGameObject.isComparisonTrue === true) {
-              setMatchedOnTrueBool(concentrationGameObject);
+              setMatchedOnComparisonTrue(concentrationGameObject);
             } else if (concentrationGameObject.isComparisonTrue === false) {
-              setTimeout(() => setImageOnFalseBoolTimeOut(concentrationGameObject), 1000);
-              let selectImgRemoveClicked = document.querySelector(`#img${concentrationGameObject.selectedPreviousCard}`);
-              selectImgRemoveClicked.removeAttribute("class", "clicked");
-              selectImgRemoveClicked = document.querySelector(`#img${concentrationGameObject.selectedCurrentCard}`);
-              selectImgRemoveClicked.removeAttribute("class", "clicked");
+              setTimeout(() => setImageOnComparisonFalseTimeOut(concentrationGameObject), 1000);
+              removeClickedClassOnComparisonFalse(concentrationGameObject);
             }
           });
           deckOutputEle.appendChild(div);
