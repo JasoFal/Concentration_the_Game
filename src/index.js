@@ -50,7 +50,7 @@ function removeClickedClassOnComparisonFalse(object) {
   selectImgRemoveClicked.removeAttribute("class", "clicked");
 }
 
-function divAndImgCreation(index) {
+function divAndImgElementCreation(index) {
   let createDiv = document.createElement("div");
   createDiv.id = `${index}`;
   createDiv.class = "cardDiv";
@@ -76,15 +76,14 @@ window.addEventListener("load", function () {
         const concentrationGameObject = new ConcentrationGameObject(cardObjectArray);
         const deckOutputEle = document.querySelector("#deckOutput");
         cardObjectArray.forEach((element, index) => {
-          let div = divAndImgCreation(index)[0];
-          let img = divAndImgCreation(index)[1];
+          let div = divAndImgElementCreation(index)[0];
+          let img = divAndImgElementCreation(index)[1];
           div.appendChild(img);
           div.addEventListener("click", function () {
             if (concentrationGameObject.selectedPreviousCard != null && concentrationGameObject.selectedCurrentCard != null) { return; }
             if (div.id === concentrationGameObject.selectedPreviousCard) { return; }
             if (concentrationGameObject.matchedCardArray.includes(div.id)) { return; }
             concentrationGameObject.cardSelectAndCompare(div.id);
-            if (div.class === "onCorrectMatch") { return; }
             img.src = element["image"];
             img.setAttribute("class", "clicked");
             if (concentrationGameObject.isComparisonTrue === true) {
@@ -92,7 +91,6 @@ window.addEventListener("load", function () {
             } else if (concentrationGameObject.isComparisonTrue === false) {
               setTimeout(() => setImageOnComparisonFalseTimeOut(concentrationGameObject), 1000);
               removeClickedClassOnComparisonFalse(concentrationGameObject);
-              concentrationGameObject.resetSelectionProcess();
             }
             if (concentrationGameObject.hasVictoryConditionBeenMet === true) {
               showVictoryAndHideDomGameElements();
@@ -105,5 +103,5 @@ window.addEventListener("load", function () {
         });
       });
     });
-  });
+  }, {once : true});
 });
