@@ -69,9 +69,9 @@ function showVictoryAndHideDomGameElements() {
 window.addEventListener("load", function () {
   document.querySelector("#startNewGame").addEventListener("click", function (event) {
     event.preventDefault();
+    document.querySelector("#startZone").setAttribute("class", "hidden");
     createDeckOfNewCards().then(function (newDeckId) {
       getFullDeckOfCards(newDeckId).then(function (drawnDeckOfCardsObject) {
-        document.querySelector("#startZone").setAttribute("class", "hidden");
         let cardObjectArray = drawnDeckOfCardsObject["cards"];
         const concentrationGameObject = new ConcentrationGameObject(cardObjectArray);
         const deckOutputEle = document.querySelector("#deckOutput");
@@ -103,5 +103,5 @@ window.addEventListener("load", function () {
         });
       });
     });
-  }, {once : true});
+  });
 });
