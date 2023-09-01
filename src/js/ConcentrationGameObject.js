@@ -5,7 +5,6 @@ export default class ConcentrationGameObject {
     this.selectedCurrentCard = null;
     this.isComparisonTrue = null;
     this.matchedCardArray = [];
-    this.previousAndCurrentCardArray = [this.selectedPreviousCard, this.selectedCurrentCard];
     this.hasVictoryConditionBeenMet = false;
     this.uniqueCardIdSet = null;
   }

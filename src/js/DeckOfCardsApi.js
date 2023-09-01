@@ -27,8 +27,3 @@ export default class DeckOfCardsApi {
     }
   }
 }
-
-//TODO Bug is caused by the thing getting stuck on if condition adding a if that stops it immediately if cards are the same
-//TODO Want to create feature that stops user from clicking card again if card has already been matched probably will be some sort of id selection maybe taken from the SET object
-//TODO Create End Screen for game over condition with play again feature a maybe goal is probably a counter for how many moves taken or time spent an accuracy counter would be neat
-//TODO 
