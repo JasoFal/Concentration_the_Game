@@ -93,7 +93,7 @@ window.addEventListener("load", function () {
               removeClickedClassOnComparisonFalse(concentrationGameObject);
             }
             if (concentrationGameObject.hasVictoryConditionBeenMet === true) {
-              showVictoryAndHideDomGameElements();
+              setTimeout(() => showVictoryAndHideDomGameElements(), 1000);
               document.querySelector("#playAgain").addEventListener("click", function () {
                 window.location.reload();
               });
